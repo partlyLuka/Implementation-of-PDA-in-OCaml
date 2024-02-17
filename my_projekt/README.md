@@ -8,27 +8,28 @@ Skladovni avtomat nam namreč v tem primeru omogoči, da si zapomnimo, koliko en
 
 ## Matematična definicija
 
-Končni avtomat je definiran kot nabor $(\Sigma, Q, q_0, F, \delta)$, kjer so:
-
-- $\Sigma$ množica simbolov oz. abeceda,
-- $Q$ množica stanj,
-- $q_0 \in Q$ začetno stanje,
-- $F \subseteq Q$ množica sprejemnih stanj in
-- $\delta : Q \times \Sigma \to Q$ prehodna funkcija.
-
-Skladovni avtomat je sedmerica elementov $M = (Q,\Sigma, G, \delta, q0, Z, F)$, pri čemer je :
+Skladovni avtomat je sedmerica elementov $M = (Q,\Sigma, G, \delta, q_0, Z, F)$, pri čemer je :
 - $Q$ končna množica stanj,
 - $\Sigma$ končna množica znakov, ki jih sprejemamo, oziroma abececa,
 - $G$ končna množica znakov, ki so lahko na skaldu,
 - $\delta : Q \times \Sigma \times G \to Q \times (G \times G)$ je prehodna oziroma tranzicijska funkcija,
-- $q0 \in Q$ je začetno stanje,
+- $q_0 \in Q$ je začetno stanje,
 - $Z \in G$ je začetni znak na skladu,
-- $F \subset Q$ je množica sprejemljivih stanj.
-Na primer, zgornji končni avtomat predstavimo z naborom $(\{0, 1\}, \{q_0, q_1, q_2\}, q_0, \{q_1\}, \delta)$, kjer je $\delta$ podana z naslednjo tabelo:
+- $F \subseteq Q$ je množica sprejemljivih stanj.
 
+Na primer, zgornji skladovni avtomat predstavimo z naborom $(\{0, 1\}, \{q_0, q_1, q_2\}, q_0, \{q_1\}, \delta)$, kjer je $\delta$ podana z naslednjo tabelo:
+Na primer, zgornji skladovni avtomat predstavimo takole : 
+- $Q = {q_i, q_1, q_0, q_f}$
+- $\Sigma = {<, 1, 0, >}$. Znaka < in > uporabimo kot posebna znaka, ki predstavljata konec oziroma začetek niza
+- $G = {z, 1, 0}$, pri čemer z služi kot začetni znak na skladu. V naši implementaciji smo namesto z uporabili znak, za ameriški dolar,
+- $\delta$ predstavimo v spodnji tabeli,
+- $q_0 = q_i$,
+- $Z = z$ in
+- $F = {q_f}$.
+Sledečo tabelo je treba malce komentirati. Če označimo $\delta : (q, s, g) \mapsto (q', (x, y))$. V tem primeru se pomaknemo iz stanja $q$ v stanje $q'$ ob predpostavki, da preberemo znak $s$ in da je na vrhu sklada znak $g$. Poleg pomika po stanjih nam še to predstavlja spremembo na skladu, in sicer iz vrha sklada odstranimo element $y$ ter na sklad dodamo element $x$. Opomnimo, da je ta predpis smiselen natanko tedaj, ko velje $g = y$.
 | $\delta$ | `0`   | `1`   |
 | -------- | ----- | ----- |
-| $q_0$    | $q_0$ | $q_1$ |
+| $(q_i, <, )$    | $q_0$ | $q_1$ |
 | $q_1$    | $q_2$ | $q_0$ |
 | $q_2$    | $q_1$ | $q_2$ |
 
