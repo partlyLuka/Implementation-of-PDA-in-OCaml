@@ -17,7 +17,8 @@ Skladovni avtomat je sedmerica elementov $M = (Q,\Sigma, G, \delta, q_0, Z, F)$,
 - $Z \in G$ je začetni znak na skladu,
 - $F \subseteq Q$ je množica sprejemljivih stanj.
 
-Na primer, zgornji skladovni avtomat predstavimo z naborom $(\{0, 1\}, \{q_0, q_1, q_2\}, q_0, \{q_1\}, \delta)$, kjer je $\delta$ podana z naslednjo tabelo:
+
+
 Na primer, zgornji skladovni avtomat predstavimo takole : 
 - $Q = \{q_i, q_1, q_0, q_f\}$
 - $\Sigma = \{, 1, 0, \}$. Znaka < in > uporabimo kot posebna znaka, ki predstavljata konec oziroma začetek niza
@@ -45,34 +46,60 @@ Sledečo tabelo je treba malce komentirati. Če označimo $\delta : (q, s, g) \m
 
 ## Navodila za uporabo
 
-Ker projekt služi kot osnova za večje projekte, so njegove lastnosti zelo okrnjene. Konkretno implementacija omogoča samo zgoraj omenjeni končni avtomat. Na voljo sta dva vmesnika, tekstovni in grafični. Oba prevedemo z ukazom `dune build`, ki v korenskem imeniku ustvari datoteko `tekstovniVmesnik.exe`, v imeniku `html` pa JavaScript datoteko `spletniVmesnik.bc.js`, ki se izvede, ko v brskalniku odpremo `spletniVmesnik.html`.
-
-Če OCamla nimate nameščenega, lahko še vedno preizkusite tekstovni vmesnik prek ene od spletnih implementacij OCamla, najbolje <http://ocaml.besson.link/>, ki podpira branje s konzole. V tem primeru si na vrh datoteke `tekstovniVmesnik.ml` dodajte še vrstice
-
-```ocaml
-module Avtomat = struct
-    (* celotna vsebina datoteke avtomat.ml *)
-end
-```
+Projekt vsebuje implementacijo skladovnih avtomatov v OCamlu. Na voljo je tekstovni vmestnik, navodila za njegovo uporabo so v spodnjem razdelku. Z ukazom dune build ustvarite .exe datoteko, ki služi kot glavna datoteka, kar se tiče izvedbe in uporabe programa. 
 
 ### Tekstovni vmesnik
 
-TODO
+Z ukazom dune build ustvarite .exe datoteko. Poženeto jo z ukaxom dune exe ./ime_datoteke.exe. 
 
-### Spletni vmesnik
+Tekstovni vmesnik ima sledeče funkcionalnosti : 
+- Lahko preizkusite uporabo zgoraj omenjenega avtomata. Vmesnik vas jasno vodi skozi njegovo uporabo.
+- Lahko ustvari svoj osebni skladovni avtomat po vaši želji in ga preizkusite na poljubnih nizih.
+- Ko imate izbrani oziramo izdelani avtomat ga lahko preizkusite na dva načina. Lahko mu preprosto podate niz, vmesnik pa vam bo sporočil, ali je bil niz sprejet. Drugi način je bolj nazoren za razumevanje, in sicer nudi iterativno pomikanje po nizu. To pomeni, da lahko znak za znak vnašate niz. Sproti se vam bo izpisovalo stanje avtomata in stanje na skladu. Ko pridete do konca niza preprosto stisnite enter (vnesite prazen niz).
 
-TODO
+Naj opozorimo in predlagamo, da sleherni niz, ki ga boste vnesli malce spremenite, in sicer na začetek dodajte '<' ter na konec '>'. Tak dogovor zelo hitro pomete z veliko preglavicami, ampak je seveda tudi odvisen od vaše same implementacije skladovnega avtomaa, če se boste za to odločili.
+
+Za iterativno vnašanje je morda potreben primer za nazorno razlago. Recimo, da želimo vnesti niz '1100'. Za iterativno vnašanje bi vnesli naslednje nize (v takem vrstnem red8):
+- '<1100>'
+- '1100>'
+- '100>'
+- '00>'
+- '0>'
+- '>'
+- '' (prazen niz)
+
+Alternativno bi lahko vnašali tudi :
+- '<'
+- '1'
+- '1'
+- '0'
+- '0'
+- '>'
+- '' (prazen niz)
+
+
 
 ## Implementacija
 
 ### Struktura datotek
 
-TODO
+Pomembna mapa je mapa 'src', ki kateri sta mapi 'definicije' in 'tekstoVmesnik'.
+
+V mapi 'definicije' so .ml datoteke, ki katerih je implementiran skladovni avtomat. Ta mapa je sestavljena iz sledečih .ml datotek.
 
 ### `avtomat.ml`
 
-TODO
+Tu je implementiran skladovni avtomat. Poleg tega so priložene še pomožne funkcije za delo s skladovnimi avtomati. Podana je tudi implementacija zgornjega primera. Poleg tega so spisane funkcije, ki pomagajo pri interaktivnem sestavljanju svojega skladovnega avtomata. 
 
-### `model.ml`
+### `sklad.ml`
 
-TODO
+V tej datoteki je implementiran sklad, ki ga dodamo tipe avtomata v datoteki avtomat.ml.
+
+### `stanje.ml`
+
+V tej datoteki je implementiran tip stanja, ki služi kot nepogrešljiv del tipe avtomata v datoteki avtomat.ml.
+
+V mapi ''tekstovniVmesnik' je le ena .ml datoteka, in sicer 'tekstovniVmesnik.ml'.
+
+### `tekstovniVmesnik.ml`
+Datoteka implementira tekstovni vmesnik ter uporabi tipe ter funnkcije iz datotek iz mape 'definicije'. Na koncu celoto poveže funkcia ''main ()'.
