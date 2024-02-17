@@ -1,10 +1,10 @@
-# Končni avtomati
+# Skladovni avtomat
 
-Projekt vsebuje implementacijo končnih avtomatov, enega najpreprostejših računskih modelov, ter njihovo uporabo pri karakterizaciji nizov. Končni avtomat začne v enem izmed možnih stanj, nato pa glede na trenutno stanje in trenutni simbol preide v neko novo stanje. Če ob pregledu celotnega niza konča v enem od sprejemnih stanj, je niz sprejet, sicer pa ni.
+Skladovni avtomat je nadgradnja preprostega končnega avtomata. Dodamo mu namreč še sklad, ki služit kot (neskončen) spomin. Skladovni avtomat sprejme niz, ter se pomika po njegovih možnih stanjih, medtem pa na sklad nalaga oziroma odstranjuje elemente glede na njegovo tranzicijsko funkcijo. Avtomat sprejme niz, če konča v enem od sprejemnih stanj oziroma se sklad znajde v prvotnem stanju.
 
-Za tekoči primer si oglejmo avtomat, ki sprejema nize, sestavljene iz ničel in enic, v katerih da vsota enic pri deljenju s 3 ostanek 1. Tak avtomat predstavimo z naslednjim diagramom, na katerem je začetno stanje označeno s puščico, sprejemna stanja pa so dvojno obkrožena.
+Za primer si oglejmo najpreprostejši primer skladovnega avtomata. Ta avtomat bo sprejel nize oblike 111...10...000, kjer je število enk v takem nizu natanko enako številu enk. Z lemo o napihovanju smo na predavanjih dokazali, da navaden končni avtomat ne premore sprejetih takih nizov, če ne predpostavimo, da je niz določene dolžine oziroma ne predpostavimo, da obstaja največja možna dolžina. 
 
-TODO
+Skladovni avtomat nam namreč v tem primeru omogoči, da si zapomnimo, koliko enk smo sprejeli, da neke točke in pri tem nas dolžine niza v nobenem smislu ne omejuje. Ideja je sledeča. Na začetku sprejemamo enice, in si jih nalagamo na sklad. Ko naletimo na ničle pa iz sklada odstranimo enice, in sicer za vsako videno ničlo odstranimo natanko eno enice. Tako bo avtomat sprejel nize, pri katerih se bo sklad na koncu znašel v natanko svojem prvotnem stanju, kar se zgodi natanko tedaj, ko je število enic enako številu ničel.
 
 ## Matematična definicija
 
@@ -16,6 +16,14 @@ Končni avtomat je definiran kot nabor $(\Sigma, Q, q_0, F, \delta)$, kjer so:
 - $F \subseteq Q$ množica sprejemnih stanj in
 - $\delta : Q \times \Sigma \to Q$ prehodna funkcija.
 
+Skladovni avtomat je sedmerica elementov $M = (Q,\Sigma, G, \delta, q0, Z, F)$, pri čemer je :
+- $Q$ končna množica stanj,
+- $\Sigma$ končna množica znakov, ki jih sprejemamo, oziroma abececa,
+- $G$ končna množica znakov, ki so lahko na skaldu,
+- $\delta : Q \times \Sigma \time G \to Q \times (Q \times Q)$ je prehodna oziroma tranzicijska funkcija,
+- $q0 \in Q$ je začetno stanje,
+- $Z \in G$ je začetni znak na skladu,
+- $F \subset Q$ je množica sprejemljivih stanj.
 Na primer, zgornji končni avtomat predstavimo z naborom $(\{0, 1\}, \{q_0, q_1, q_2\}, q_0, \{q_1\}, \delta)$, kjer je $\delta$ podana z naslednjo tabelo:
 
 | $\delta$ | `0`   | `1`   |
