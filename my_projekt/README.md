@@ -19,13 +19,13 @@ Skladovni avtomat je sedmerica elementov $M = (Q,\Sigma, G, \delta, q_0, Z, F)$,
 
 Na primer, zgornji skladovni avtomat predstavimo z naborom $(\{0, 1\}, \{q_0, q_1, q_2\}, q_0, \{q_1\}, \delta)$, kjer je $\delta$ podana z naslednjo tabelo:
 Na primer, zgornji skladovni avtomat predstavimo takole : 
-- $Q = {q_i, q_1, q_0, q_f}$
-- $\Sigma = {<, 1, 0, >}$. Znaka < in > uporabimo kot posebna znaka, ki predstavljata konec oziroma začetek niza
-- $G = {z, 1, 0}$, pri čemer z služi kot začetni znak na skladu. V naši implementaciji smo namesto z uporabili znak, za ameriški dolar,
+- $Q = \{q_i, q_1, q_0, q_f\}$
+- $\Sigma = \{\<, 1, 0, \>\}$. Znaka < in > uporabimo kot posebna znaka, ki predstavljata konec oziroma začetek niza
+- $G = \{z, 1, 0\}$, pri čemer z služi kot začetni znak na skladu. V naši implementaciji smo namesto z uporabili znak, za ameriški dolar,
 - $\delta$ predstavimo v spodnji tabeli,
 - $q_0 = q_i$,
 - $Z = z$ in
-- $F = {q_f}$.
+- $F = \{q_f\}$.
 Sledečo tabelo je treba malce komentirati. Če označimo $\delta : (q, s, g) \mapsto (q', (x, y))$. V tem primeru se pomaknemo iz stanja $q$ v stanje $q'$ ob predpostavki, da preberemo znak $s$ in da je na vrhu sklada znak $g$. Poleg pomika po stanjih nam še to predstavlja spremembo na skladu, in sicer iz vrha sklada odstranimo element $y$ ter na sklad dodamo element $x$. Opomnimo, da je ta predpis smiselen natanko tedaj, ko velje $g = y$.
 | $\delta$ | `0`   | `1`   |
 | -------- | ----- | ----- |
