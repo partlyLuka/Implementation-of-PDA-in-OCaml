@@ -20,7 +20,7 @@ Skladovni avtomat je sedmerica elementov $M = (Q,\Sigma, G, \delta, q0, Z, F)$, 
 - $Q$ končna množica stanj,
 - $\Sigma$ končna množica znakov, ki jih sprejemamo, oziroma abececa,
 - $G$ končna množica znakov, ki so lahko na skaldu,
-- $\delta : Q \times \Sigma \time G \to Q \times (Q \times Q)$ je prehodna oziroma tranzicijska funkcija,
+- $\delta : Q \times \Sigma \times G \to Q \times (G \times G)$ je prehodna oziroma tranzicijska funkcija,
 - $q0 \in Q$ je začetno stanje,
 - $Z \in G$ je začetni znak na skladu,
 - $F \subset Q$ je množica sprejemljivih stanj.
