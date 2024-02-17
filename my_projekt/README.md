@@ -55,7 +55,7 @@ Z ukazom dune build ustvarite .exe datoteko. Poženeto jo z ukaxom dune exe ./im
 Tekstovni vmesnik ima sledeče funkcionalnosti : 
 - Lahko preizkusite uporabo zgoraj omenjenega avtomata. Vmesnik vas jasno vodi skozi njegovo uporabo.
 - Lahko ustvari svoj osebni skladovni avtomat po vaši želji in ga preizkusite na poljubnih nizih.
-- Ko imate izbrani oziramo izdelani avtomat ga lahko preizkusite na dva načina. Lahko mu preprosto podate niz, vmesnik pa vam bo sporočil, ali je bil niz sprejet. Drugi način je bolj nazoren za razumevanje, in sicer nudi iterativno pomikanje po nizu. To pomeni, da lahko znak za znak vnašate niz. Sproti se vam bo izpisovalo stanje avtomata in stanje na skladu. Ko pridete do konca niza preprosto stisnite enter (vnesite prazen niz).
+- Ko imate izbrani oziramo izdelani avtomat ga lahko preizkusite na dva načina. Lahko mu preprosto podate niz, vmesnik pa vam bo sporočil, ali je bil niz sprejet. Drugi način je bolj nazoren za razumevanje, in sicer nudi iterativno pomikanje po nizu. To pomeni, da lahko znak za znak vnašate niz. Sproti se vam bo izpisovalo stanje avtomata in stanje na skladu. Ko pridete do konca niza preprosto stisnite enter (vnesite prazen niz).Tedaj vam bo vmesnik tudi izpisal ali je bil niz v celoti sprejet. 
 
 Naj opozorimo in predlagamo, da sleherni niz, ki ga boste vnesli malce spremenite, in sicer na začetek dodajte '<' ter na konec '>'. Tak dogovor zelo hitro pomete z veliko preglavicami, ampak je seveda tudi odvisen od vaše same implementacije skladovnega avtomaa, če se boste za to odločili.
 
