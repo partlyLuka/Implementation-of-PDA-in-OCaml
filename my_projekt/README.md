@@ -274,9 +274,9 @@ Sledeča funkcija je najpomembnejša za samo uporabo skladdovnega avtomata :
 ```ocaml
 val preberi_niz : t -> Stanje.t ->string -> (t * Stanje.t * (char) option) option
 ```
-Ta sprejme skladovni avtomat, neko začetno stanje ter niz.  vrne trojico 
+Ta sprejme skladovni avtomat, neko začetno stanje ter niz.  Vrne trojico 
 ```ocaml
-Some (avtomat' * stanje' * Some vrh)
+Some (avtomat', stanje', Some vrh)
 ```
 ali pa None. Avtomat' je spremenjen avtomat po prebranem nizu (spremeni se mu stanje na skladu), stanje' je končno stanje ter Some vrh je char option type, ki predsavlja vrh končnega sklada. 
 
