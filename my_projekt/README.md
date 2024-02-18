@@ -20,8 +20,8 @@ Skladovni avtomat je sedmerica elementov $M = (Q,\Sigma, G, \delta, q_0, Z, F)$,
 
 
 Na primer, zgornji skladovni avtomat predstavimo takole : 
-- $Q = \{q_i, q_1, q_0, q_f\}$
-- $\Sigma = \{, 1, 0, \}$. Znaka < in > uporabimo kot posebna znaka, ki predstavljata konec oziroma začetek niza
+- $Q = \{q_i, q_1, q_0, q_f\}$, pri čemer $q_i$ predstavlja stanje, v katerem sprejmemo začetni znak, $q_1$ stanje, v katerem bomo na sklad dodajali enice, $q_0$ stanje, v katerem bomo za vsako videno ničlo odstranili eno enico in $q_f$ predstavlja sprejemno stanje,
+- $\Sigma = \{ <, 1, 0, > \}$. Znaka < in > uporabimo kot posebna znaka, ki predstavljata konec oziroma začetek niza
 - $G = \{z, 1, 0\}$, pri čemer z služi kot začetni znak na skladu. V naši implementaciji smo namesto z uporabili znak, za ameriški dolar,
 - $\delta$ predstavimo v spodnji tabeli,
 - $q_0 = q_i$,
@@ -76,10 +76,81 @@ Alternativno bi lahko vnašali tudi :
 - '0'
 - '>'
 - '' (prazen niz)
+Poglejmo si še zgoraj opisani primer v samem tekstovnem vmesniku.
 
+Če želim za niz '1100' ugotoviti zgolj, ali je sprejemljiv niz, bi izbrali navadno branje niza in rezultat v terminalu bi zgledal takole :
+```plaintext
+Opozorilo : če uporabljate že implementiran avtomat in če želite vnesti niz 'niz', prosim vnesit niz '<' + 'niz' + '>'.
+1) izpiši avtomat
+2) preberi niz
+3) Vnesi niz ter po korakih spremljaj, kako avtomat sprejema niz
+> 2
+Trenutno stanje :
+qi
+Trenutni sklad :
+$
+Vnesi niz > <1100>
+Trenutno stanje :
+qf
+Trenutni sklad :
+$
+Niz je bil sprejet
+Avtomat se bo zdaj resetiral.
+```
 
+Opozorilo, da se bo avtomat resetiral pomeni le, da se bo stanje na skladu vrnilo na prvotno stanje ter, da se trenutno stanje pomakne nazaj na začetno stanje.
 
+Sledi še primer uporabe v primeru, ko želimo iterativno brati niz:
+```plaintext
+Opozorilo : če uporabljate že implementiran avtomat in če želite vnesti niz 'niz', prosim vnesit niz '<' + 'niz' + '>'.
+1) izpiši avtomat
+2) preberi niz
+3) Vnesi niz ter po korakih spremljaj, kako avtomat sprejema niz
+> 3
+Trenutno stanje :
+qi
+Trenutni sklad :
+$
+Vnesi niz > <1100>
+Trenutno stanje :
+q1
+Trenutni sklad :
+$
+Vnesi niz > 1100>
+Trenutno stanje :
+q1
+Trenutni sklad :
+1$
+Vnesi niz > 100>
+Trenutno stanje :
+q1
+Trenutni sklad :
+11$
+Vnesi niz > 00>
+Trenutno stanje :
+q0
+Trenutni sklad :
+1$
+Vnesi niz > 0>
+Trenutno stanje :
+q0
+Trenutni sklad :
+$
+Vnesi niz > >
+Trenutno stanje :
+qf
+Trenutni sklad :
+$
+Vnesi niz > 
+Trenutno stanje :
+qf
+Trenutni sklad :
+$
+Niz je bil sprejet
+Avtomat se bo zdaj resetiral.
+```
 ## Implementacija
+Na tem mestu naj opozorimo, da naša implementacija predpostavlja, da se sklad nikdar ne popolnooma sprazni. Znak, ki je na začetku na dnu sklada, vedno ostane na skladu. 
 
 ### Struktura datotek
 
@@ -90,16 +161,78 @@ V mapi 'definicije' so .ml datoteke, ki katerih je implementiran skladovni avtom
 ### `avtomat.ml`
 
 Tu je implementiran skladovni avtomat. Poleg tega so priložene še pomožne funkcije za delo s skladovnimi avtomati. Podana je tudi implementacija zgornjega primera. Poleg tega so spisane funkcije, ki pomagajo pri interaktivnem sestavljanju svojega skladovnega avtomata. 
+Avtomat predstavimo s sledečim zapisnim tipom : 
+```ocaml
+type t = {
+  stanja : stanje list;
+  zacetno_stanje : stanje;
+  sprejemna_stanja : stanje list;
+  prehodi : (stanje * char * char * stanje * (char list)) list;
+  sklad : sklad;
+}
+```
+Tip stanje je implementiran v stanje.ml, tip sklad pa v sklad.ml.
+
+Sledeča funkcija je najpomembnejša za samo uporabo skladdovnega avtomata : 
+```ocaml
+val preberi_niz : t -> Stanje.t ->string -> (t * Stanje.t * (char) option) option
+```
+Ta sprejme skladovni avtomat, neko začetno stanje ter niz.  vrne trojico 
+```ocaml
+avtomat' * stanje' * Some vrh
+```
+ali pa None. Avtomat' je spremenjen avtomat po prebranem nizu (spremeni se mu stanje na skladu), stanje' je končno stanje ter Some vrh je char option type, ki predsavlja vrh končnega sklada. 
+
+Funkcija, ki omogoča grajenje svojega avtomata je sledeča : 
+```ocaml
+val make_custom_avtomat : unit -> t
+```
+Izhodiščni primer je podan v sledeči spremenljivki : 
+```ocaml
+val n_enk_n_nicel : t
+```
 
 ### `sklad.ml`
 
 V tej datoteki je implementiran sklad, ki ga dodamo tipe avtomata v datoteki avtomat.ml.
+Sklad je predstavljen s sledečim tipom : 
+```ocaml
+type t = {seznam_sklada : char list; special : char;}
+```
+Seznam sklada predsavlja intuitivno predstavo sklada. Je char list, pri čemer je prvi znak v seznamu vrh sklada, zadnji element pa dno. 'special' predstavlja posebni znak, ki je na dnu sklada. V našem primeru je to znak $z$, v sami implementaciji pa je to znak za ameriški dolar. Poleg definicije tipa so v tej datoteki implementirane osnovne funkcije, ki smo jih potrebovali pri nadaljni implementaciji in delu z avtomatom in njegovim skladom. 
 
 ### `stanje.ml`
 
 V tej datoteki je implementiran tip stanja, ki služi kot nepogrešljiv del tipe avtomata v datoteki avtomat.ml.
 
+Stanje je predstavljeno s sledečim tipom : 
+```ocaml
+type t = { oznaka : string }
+```
+Je preprost zapisni tip z zgolj enim poljem. To polje predstavlja ime stanje.
+
 V mapi ''tekstovniVmesnik' je le ena .ml datoteka, in sicer 'tekstovniVmesnik.ml'.
 
 ### `tekstovniVmesnik.ml`
-Datoteka implementira tekstovni vmesnik ter uporabi tipe ter funnkcije iz datotek iz mape 'definicije'. Na koncu celoto poveže funkcia ''main ()'.
+V mapi ''tekstovniVmesnik' je le ena .ml datoteka, in sicer 'tekstovniVmesnik.ml'.
+
+V tej datoteki so celovito zbrane najpomembnejše funkcije. Začnimo pa s samo definicijo model : 
+```ocaml
+type model = {
+  avtomat : t;
+  stanje_avtomata : Stanje.t;
+  stanje_vmesnika : stanje_vmesnika;
+}
+```
+Avtomat je kajpak tip avtomata iz skripte avtomat.ml, stanje_avtomata pa tip stanja iz skripte stanje.ml. Novost je le stanje_vmesnika, ki pa je vsotni tip z določenim številom možnih stanj. 
+
+Funkcija loop
+```ocaml
+let rec loop model
+```
+Nam omogoča branje nizov.
+Funkcija main 
+```ocaml
+let rec main ()
+```
+Pa nam omogoča izbiro avtomata oziroma njegovo izgradnjo ter nadaljnjo uporabo.
