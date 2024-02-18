@@ -1,25 +1,25 @@
 # Skladovni avtomat
 
-Skladovni avtomat je nadgradnja preprostega končnega avtomata. Dodamo mu namreč še sklad, ki služit kot (neskončen) spomin. Skladovni avtomat sprejme niz, ter se pomika po njegovih možnih stanjih, medtem pa na sklad nalaga oziroma odstranjuje elemente glede na njegovo tranzicijsko funkcijo. Avtomat sprejme niz, če konča v enem od sprejemnih stanj oziroma se sklad znajde v prvotnem stanju.
+Skladovni avtomat je nadgradnja preprostega končnega avtomata. Dodamo mu namreč še sklad, ki služi kot (neskončen) spomin. Skladovni avtomat sprejme niz ter se pomika po svojih možnih stanjih, medtem pa na sklad nalaga oziroma odstranjuje elemente glede na njegovo tranzicijsko funkcijo. Avtomat sprejme niz, če konča v enem od sprejemnih stanj oziroma se sklad znajde v prvotnem stanju.
 
-Za primer si oglejmo najpreprostejši primer skladovnega avtomata. Ta avtomat bo sprejel nize oblike 111...10...000, kjer je število enk v takem nizu natanko enako številu enk. Z lemo o napihovanju smo na predavanjih dokazali, da navaden končni avtomat ne premore sprejetih takih nizov, če ne predpostavimo, da je niz določene dolžine oziroma ne predpostavimo, da obstaja največja možna dolžina. 
+Za primer si oglejmo najpreprostejši primer skladovnega avtomata. Ta avtomat bo sprejel nize oblike 111...10...000, kjer je število enk v takem nizu natanko enako številu ničel. Z lemo o napihovanju smo na predavanjih dokazali, da navaden končni avtomat ne premore sprejeti takih nizov, če ne predpostavimo, da je niz določene dolžine, oziroma ne predpostavimo, da obstaja največja možna dolžina. 
 
-Skladovni avtomat nam namreč v tem primeru omogoči, da si zapomnimo, koliko enk smo sprejeli, da neke točke in pri tem nas dolžine niza v nobenem smislu ne omejuje. Ideja je sledeča. Na začetku sprejemamo enice, in si jih nalagamo na sklad. Ko naletimo na ničle pa iz sklada odstranimo enice, in sicer za vsako videno ničlo odstranimo natanko eno enice. Tako bo avtomat sprejel nize, pri katerih se bo sklad na koncu znašel v natanko svojem prvotnem stanju, kar se zgodi natanko tedaj, ko je število enic enako številu ničel.
+Skladovni avtomat nam namreč v tem primeru omogoči, da si zapomnimo, koliko enk smo sprejeli do neke točke in pri tem nas dolžina niza v nobenem smislu ne omejuje. Ideja je sledeča. Na začetku sprejemamo enice, in si jih nalagamo na sklad. Ko naletimo na ničle pa iz sklada odstranimo enice, in sicer za vsako videno ničlo odstranimo natanko eno enico. Tako bo avtomat sprejel nize, pri katerih se bo sklad na koncu znašel v natanko svojem prvotnem stanju, kar se zgodi natanko tedaj, ko je število enic enako številu ničel.
 
 ## Matematična definicija
 
 Skladovni avtomat je sedmerica elementov $M = (Q,\Sigma, G, \delta, q_0, Z, F)$, pri čemer je :
 - $Q$ končna množica stanj,
-- $\Sigma$ končna množica znakov, ki jih sprejemamo, oziroma abececa,
+- $\Sigma$ končna množica znakov, ki jih sprejemamo, oziroma abeceda,
 - $G$ končna množica znakov, ki so lahko na skaldu,
 - $\delta : Q \times \Sigma \times G \to Q \times ( G \times G)$ je prehodna oziroma tranzicijska funkcija,
 - $q_0 \in Q$ je začetno stanje,
 - $Z \in G$ je začetni znak na skladu,
-- $F \subseteq Q$ je množica sprejemljivih stanj.
+- $F \subseteq Q$ je množica sprejemnih stanj.
 
 
 
-Na primer, zgornji skladovni avtomat predstavimo takole : 
+Na primer, zgornji skladovni avtomat predstavimo takole: 
 - $Q = \{q_i, q_1, q_0, q_f\}$, pri čemer $q_i$ predstavlja stanje, v katerem sprejmemo začetni znak, $q_1$ stanje, v katerem bomo na sklad dodajali enice, $q_0$ stanje, v katerem bomo za vsako videno ničlo odstranili eno enico in $q_f$ predstavlja sprejemno stanje,
 - $\Sigma = \{ <, 1, 0, > \}$. Znaka < in > uporabimo kot posebna znaka, ki predstavljata konec oziroma začetek niza
 - $G = \{z, 1, 0\}$, pri čemer z služi kot začetni znak na skladu. V naši implementaciji smo namesto z uporabili znak, za ameriški dolar,
@@ -54,12 +54,12 @@ Z ukazom dune build ustvarite .exe datoteko. Poženeto jo z ukaxom dune exe ./im
 
 Tekstovni vmesnik ima sledeče funkcionalnosti : 
 - Lahko preizkusite uporabo zgoraj omenjenega avtomata. Vmesnik vas jasno vodi skozi njegovo uporabo.
-- Lahko ustvari svoj osebni skladovni avtomat po vaši želji in ga preizkusite na poljubnih nizih.
-- Ko imate izbrani oziramo izdelani avtomat ga lahko preizkusite na dva načina. Lahko mu preprosto podate niz, vmesnik pa vam bo sporočil, ali je bil niz sprejet. Drugi način je bolj nazoren za razumevanje, in sicer nudi iterativno pomikanje po nizu. To pomeni, da lahko znak za znak vnašate niz. Sproti se vam bo izpisovalo stanje avtomata in stanje na skladu. Ko pridete do konca niza preprosto stisnite enter (vnesite prazen niz).Tedaj vam bo vmesnik tudi izpisal ali je bil niz v celoti sprejet. 
+- Lahko ustvarite svoj osebni skladovni avtomat po vaši želji in ga preizkusite na poljubnih nizih.
+- Ko imate izbrani oziramo izdelani avtomat, ga lahko preizkusite na dva načina. Lahko mu preprosto podate niz, vmesnik pa vam bo sporočil, ali je bil niz sprejet. Drugi način je bolj nazoren za razumevanje, in sicer nudi iterativno pomikanje po nizu. To pomeni, da lahko znak za znak vnašate niz. Sproti se vam bo izpisovalo stanje avtomata in stanje na skladu. Ko pridete do konca niza preprosto stisnite enter (vnesite prazen niz).Tedaj vam bo vmesnik tudi izpisal ali je bil niz v celoti sprejet. 
 
-Naj opozorimo in predlagamo, da sleherni niz, ki ga boste vnesli malce spremenite, in sicer na začetek dodajte '<' ter na konec '>'. Tak dogovor zelo hitro pomete z veliko preglavicami, ampak je seveda tudi odvisen od vaše same implementacije skladovnega avtomaa, če se boste za to odločili.
+Naj opozorimo in predlagamo, da sleherni niz, ki ga boste vnesli, malce spremenite, in sicer na začetek dodajte '<' ter na konec '>'. Tak dogovor zelo hitro pomete z veliko preglavicami, ampak je seveda tudi odvisen od vaše same implementacije skladovnega avtomata, če se boste za to odločili.
 
-Za iterativno vnašanje je morda potreben primer za nazorno razlago. Recimo, da želimo vnesti niz '1100'. Za iterativno vnašanje bi vnesli naslednje nize (v takem vrstnem red8):
+Za iterativno vnašanje je morda potreben primer za nazorno razlago. Recimo, da želimo vnesti niz '1100'. Za iterativno vnašanje bi vnesli naslednje nize (v takem vrstnem redu):
 - '<1100>'
 - '1100>'
 - '100>'
@@ -135,7 +135,7 @@ $
 Posebni znak : 
 $
 ```
-Zgornja reprezentacija terje le eno pojasnilo. Spremembo na skladu $(a, b)$ zakodiramo kot senzma $[a, b]$. Pri čemer spremembo $(,)$ predstavimo kot $[]$ in spremembo $(, a)$ kot $[a]$.
+Zgornja reprezentacija terja le eno pojasnilo. Spremembo na skladu $(a, b)$ zakodiramo kot seznam $[a, b]$. Pri čemer spremembo $(,)$ predstavimo kot $[]$ in spremembo $(, a)$ kot $[a]$.
 
 Zdaj bomo predpostavili, da smo na začetku izbrali možnost 1).
 
@@ -159,7 +159,7 @@ Niz je bil sprejet
 Avtomat se bo zdaj resetiral.
 ```
 
-Opozorilo, da se bo avtomat resetiral pomeni le, da se bo stanje na skladu vrnilo na prvotno stanje ter, da se trenutno stanje pomakne nazaj na začetno stanje.
+Opozorilo, da se bo avtomat resetiral, pomeni le, da se bo stanje na skladu vrnilo na prvotno stanje ter da se trenutno stanje pomakne nazaj na začetno stanje.
 
 Sledi še primer uporabe v primeru, ko želimo iterativno brati niz:
 ```plaintext
@@ -212,7 +212,7 @@ Avtomat se bo zdaj resetiral.
 ```
 Seveda si pa tudi lahko ogledamo naš avtomat : 
 ```plaintext
-Opozorilo : če uporabljate že implementiran avtomat in če želite vnesti niz 'niz', prosim vnesit niz '<' + 'niz' + '>'.
+Opozorilo : če uporabljate že implementiran avtomat in če želite vnesti niz 'niz', prosim vnesite niz '<' + 'niz' + '>'.
 1) izpiši avtomat
 2) preberi niz
 3) Vnesi niz ter po korakih spremljaj, kako avtomat sprejema niz
@@ -247,13 +247,13 @@ $
 ```
 
 ## Implementacija
-Na tem mestu naj opozorimo, da naša implementacija predpostavlja, da se sklad nikdar ne popolnooma sprazni. Znak, ki je na začetku na dnu sklada, vedno ostane na skladu. 
+Na tem mestu naj opozorimo, da naša implementacija predpostavlja, da se sklad nikdar popolnoma ne sprazni. Znak, ki je na začetku na dnu sklada, vedno ostane na skladu. 
 
 ### Struktura datotek
 
-Pomembna mapa je mapa 'src', ki kateri sta mapi 'definicije' in 'tekstoVmesnik'.
+Pomembna mapa je mapa 'src', v kateri sta mapi 'definicije' in 'tekstovniVmesnik'.
 
-V mapi 'definicije' so .ml datoteke, ki katerih je implementiran skladovni avtomat. Ta mapa je sestavljena iz sledečih .ml datotek.
+V mapi 'definicije' so .ml datoteke, v katerih je implementiran skladovni avtomat. Ta mapa je sestavljena iz sledečih .ml datotek.
 
 ### `avtomat.ml`
 
@@ -270,7 +270,7 @@ type t = {
 ```
 Tip stanje je implementiran v stanje.ml, tip sklad pa v sklad.ml.
 
-Sledeča funkcija je najpomembnejša za samo uporabo skladdovnega avtomata : 
+Sledeča funkcija je najpomembnejša za samo uporabo skladovnega avtomata : 
 ```ocaml
 val preberi_niz : t -> Stanje.t ->string -> (t * Stanje.t * (char) option) option
 ```
@@ -280,7 +280,7 @@ Some (avtomat', stanje', Some vrh)
 ```
 ali pa None. Avtomat' je spremenjen avtomat po prebranem nizu (spremeni se mu stanje na skladu), stanje' je končno stanje ter Some vrh je char option type, ki predsavlja vrh končnega sklada. 
 
-Funkcija, ki omogoča grajenje svojega avtomata je sledeča : 
+Funkcija, ki omogoča grajenje svojega avtomata, je sledeča : 
 ```ocaml
 val make_custom_avtomat : unit -> t
 ```
@@ -291,16 +291,16 @@ val n_enk_n_nicel : t
 
 ### `sklad.ml`
 
-V tej datoteki je implementiran sklad, ki ga dodamo tipe avtomata v datoteki avtomat.ml.
+V tej datoteki je implementiran sklad, ki ga dodamo tipu avtomata v datoteki avtomat.ml.
 Sklad je predstavljen s sledečim tipom : 
 ```ocaml
 type t = {seznam_sklada : char list; special : char;}
 ```
-Seznam sklada predsavlja intuitivno predstavo sklada. Je char list, pri čemer je prvi znak v seznamu vrh sklada, zadnji element pa dno. 'special' predstavlja posebni znak, ki je na dnu sklada. V našem primeru je to znak $z$, v sami implementaciji pa je to znak za ameriški dolar. Poleg definicije tipa so v tej datoteki implementirane osnovne funkcije, ki smo jih potrebovali pri nadaljni implementaciji in delu z avtomatom in njegovim skladom. 
+Seznam sklada predsavlja intuitivno predstavo sklada. Je char list, pri čemer je prvi znak v seznamu vrh sklada, zadnji element pa dno. 'special' predstavlja posebni znak, ki je na dnu sklada. V našem primeru je to znak $z$, v sami implementaciji pa je to znak za ameriški dolar. Poleg definicije tipa so v tej datoteki implementirane osnovne funkcije, ki smo jih potrebovali pri nadaljnji implementaciji in delu z avtomatom in njegovim skladom. 
 
 ### `stanje.ml`
 
-V tej datoteki je implementiran tip stanja, ki služi kot nepogrešljiv del tipe avtomata v datoteki avtomat.ml.
+V tej datoteki je implementiran tip stanja, ki služi kot nepogrešljiv del tipa avtomata v datoteki avtomat.ml.
 
 Stanje je predstavljeno s sledečim tipom : 
 ```ocaml
@@ -308,12 +308,11 @@ type t = { oznaka : string }
 ```
 Je preprost zapisni tip z zgolj enim poljem. To polje predstavlja ime stanje.
 
-V mapi ''tekstovniVmesnik' je le ena .ml datoteka, in sicer 'tekstovniVmesnik.ml'.
 
 ### `tekstovniVmesnik.ml`
-V mapi ''tekstovniVmesnik' je le ena .ml datoteka, in sicer 'tekstovniVmesnik.ml'.
+V mapi 'tekstovniVmesnik' je le ena .ml datoteka, in sicer 'tekstovniVmesnik.ml'.
 
-V tej datoteki so celovito zbrane najpomembnejše funkcije. Začnimo pa s samo definicijo model : 
+V tej datoteki so celovito zbrane najpomembnejše funkcije. Začnimo pa s samo definicijo modela : 
 ```ocaml
 type model = {
   avtomat : t;
