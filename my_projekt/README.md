@@ -78,6 +78,67 @@ Alternativno bi lahko vnašali tudi :
 - '' (prazen niz)
 Poglejmo si še zgoraj opisani primer v samem tekstovnem vmesniku.
 
+Najprej nas tekstovni vmesnik vpraša, ali želimo uporabiti že implementirani primer, ali pa bomo sestavili svoj avtomat. 
+```plaintext
+Pozdravljeni v svetu skladovnih avtomatov!
+Trenutno imate 3 možnosti :
+1) Lahko preizkustie v naprej pripravljen skladovni avtomat, ki preveri, ali je niz oblike 111..10...000, torej ima enako število enk kot ničel in je takšne oblike
+2) Lahko naredit svoj, res SVOJ, skladovni avtomat in ga preizkusite na čisto svojih primerih
+3) Lahko se odrečete užitku preizkuševanja in grajenju skladovnih avtomatov
+Izbira je vaša.
+```
+Načeloma bi izbrali 1) in nadaljevali, a na hitro pokažimo, kako bi naredili svoj avtomat : 
+```plaintext
+2
+Ali ste pripravljeni na izjemno avanturo, v kateri bomoo naredili prav SVOJ skladovni avtomat?Ja
+Najprej začetno stanje.Vnesi ime stanja. >qi
+Zdaj bomo določili začetni sklad.
+Vnesi natanko en znak, ki želiš, da je na dnu sklada. (Hint : napiši $) >$
+Avtomatu lahko dodamo sprejemno stanje, dodamo nesprejemno stanje ter dodamo prehod.
+1) Če želite dodati nesprejemno stanje
+2) Če želite dodati sprejemno stanje.
+3) Če želite dodati prehod
+4) Če si želite ogledati avtomat oz. mojstrovino v nastajanju
+5) Če ste zadovoljni s svojim avtomatom, ali pa če ste se naveličali.
+```
+Tedaj nas vmesnik vodi skozi izgradnjo. Morda pokažimo le, kako bi dodali prehod : 
+
+```plaintext
+3
+Najprej vnesi stanje, iz katerega se bomo pomaknili. Vnesi ime stanja. >qi
+Vnesi znak, ki bi ga sprejeli. ><
+Vnesi pričakovano vrednost na vrhu sklada. >$
+Vnesi stanje, v katerega bi se naj pomaknili. >Vnesi ime stanja. >q1
+pop ) Iz vrha sklada popnemo element
+push ) Na sklad pushnemo element
+null ) Sklad pustimo na miru
+null
+Avtomatu lahko dodamo sprejemno stanje, dodamo nesprejemno stanje ter dodamo prehod.
+1) Če želite dodati nesprejemno stanje
+2) Če želite dodati sprejemno stanje.
+3) Če želite dodati prehod
+4) Če si želite ogledati avtomat oz. mojstrovino v nastajanju
+5) Če ste zadovoljni s svojim avtomatom, ali pa če ste se naveličali.
+4
+Avtomat :
+Seznam vseh stanj : 
+qi |  
+Začetno stanje:
+qi
+Seznam sprejemnih stanj : 
+ 
+Seznam prehodov :
+ 
+qi  <  $  q1   na sklad :  [ $  ] 
+Seznam sklada : 
+$ 
+Posebni znak : 
+$
+```
+Zgornja reprezentacija terje le eno pojasnilo. Spremembo na skladu $(a, b)$ zakodiramo kot senzma $[a, b]$. Pri čemer spremembo $(,)$ predstavimo kot $[]$ in spremembo $(, a)$ kot $[a]$.
+
+Zdaj bomo predpostavili, da smo na začetku izbrali možnost 1).
+
 Če želim za niz '1100' ugotoviti zgolj, ali je sprejemljiv niz, bi izbrali navadno branje niza in rezultat v terminalu bi zgledal takole :
 ```plaintext
 Opozorilo : če uporabljate že implementiran avtomat in če želite vnesti niz 'niz', prosim vnesit niz '<' + 'niz' + '>'.
@@ -184,7 +245,7 @@ qi
 Trenutni sklad :
 $
 ```
-Zgornja reprezentacija terje le eno pojasnilo. Spremembo na skladu $(a, b)$ zakodiramo kot senzma $[a, b]$. Pri čemer spremembo $(,)$ predstavimo kot $[]$ in spremembo $(, a)$ kot $[a]$.
+
 ## Implementacija
 Na tem mestu naj opozorimo, da naša implementacija predpostavlja, da se sklad nikdar ne popolnooma sprazni. Znak, ki je na začetku na dnu sklada, vedno ostane na skladu. 
 
