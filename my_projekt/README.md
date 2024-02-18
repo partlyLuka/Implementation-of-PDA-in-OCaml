@@ -149,6 +149,42 @@ $
 Niz je bil sprejet
 Avtomat se bo zdaj resetiral.
 ```
+Seveda si pa tudi lahko ogledamo naš avtomat : 
+```plaintext
+Opozorilo : če uporabljate že implementiran avtomat in če želite vnesti niz 'niz', prosim vnesit niz '<' + 'niz' + '>'.
+1) izpiši avtomat
+2) preberi niz
+3) Vnesi niz ter po korakih spremljaj, kako avtomat sprejema niz
+> 1
+Trenutno stanje :
+qi
+Trenutni sklad :
+$
+Avtomat :
+Seznam vseh stanj : 
+q0 | q1 | qf | qi |  
+Začetno stanje:
+qi
+Seznam sprejemnih stanj : 
+qf |  
+Seznam prehodov :
+ 
+q0  >  $  qf   na sklad :  [ $  ] 
+q0  0  1  q0   na sklad :  [ ] 
+q1  0  1  q0   na sklad :  [ ] 
+q1  1  1  q1   na sklad :  [ 1  1  ] 
+q1  1  $  q1   na sklad :  [ 1  $  ] 
+qi  <  $  q1   na sklad :  [ $  ] 
+Seznam sklada : 
+$ 
+Posebni znak : 
+$
+Trenutno stanje :
+qi
+Trenutni sklad :
+$
+```
+Zgornja reprezentacija terje le eno pojasnilo. Spremembo na skladu $(a, b)$ zakodiramo kot senzma $[a, b]$. Pri čemer spremembo $(,)$ predstavimo kot $[]$ in spremembo $(, a)$ kot $[a]$.
 ## Implementacija
 Na tem mestu naj opozorimo, da naša implementacija predpostavlja, da se sklad nikdar ne popolnooma sprazni. Znak, ki je na začetku na dnu sklada, vedno ostane na skladu. 
 
@@ -179,7 +215,7 @@ val preberi_niz : t -> Stanje.t ->string -> (t * Stanje.t * (char) option) optio
 ```
 Ta sprejme skladovni avtomat, neko začetno stanje ter niz.  vrne trojico 
 ```ocaml
-avtomat' * stanje' * Some vrh
+Some (avtomat' * stanje' * Some vrh)
 ```
 ali pa None. Avtomat' je spremenjen avtomat po prebranem nizu (spremeni se mu stanje na skladu), stanje' je končno stanje ter Some vrh je char option type, ki predsavlja vrh končnega sklada. 
 
